@@ -51,7 +51,8 @@
                 <li><a href="new_chat">Start New Chat</a></li>
                 <li>
                     {% if request.user.is_authenticated %}
-                    <form action="{% url 'logout-user' %}" method="post">{% csrf_token %}
+                    <form action="{% url 'logout-user' %}" method="post">
+                        {% csrf_token %}
                         <button type="submit">Logout</button>
                     </form>
                     {% endif %}
