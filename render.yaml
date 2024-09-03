@@ -10,7 +10,7 @@ services:
     name: chat_application
     runtime: python
     buildCommand: "./build.sh"
-    startCommand: "gunicorn chat_application.wsgi"    
+    startCommand: "python manage.py runserver 0.0.0.0:8000"    
     envVars:
       - key: DATABASE_URL
         fromDatabase:
