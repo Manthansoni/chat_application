@@ -136,11 +136,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ASGI_APPLICATION = 'chat_application.asgi.application'
 
+REDIS_URL = os.environ['REDIS_URL']
+
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [("redis://red-cp7eb8ud3nmc73bq14b0", 6379)],
+            'hosts': [REDIS_URL],
         },
     },
 }
