@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # New
-    "debug_toolbar",
     'channels',
     'chat',
     'user'
@@ -55,7 +54,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'chat_application.urls'
@@ -153,10 +151,6 @@ LOGIN_REDIRECT_URL = "my-chats"
 LOGOUT_REDIRECT_URL = "login-user"
 
 AUTH_USER_MODEL = 'user.MyUser'
-
-INTERNAL_IPS = [
-    "127.0.0.1",
- ]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')

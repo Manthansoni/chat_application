@@ -25,4 +25,4 @@ urlpatterns = [
     path("", include("chat.urls")),
     path("auth/login/", LoginView.as_view(template_name="chat/LoginPage.html"), name="login-user"),
     path("auth/logout/", LogoutView.as_view(), name="logout-user"),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + debug_toolbar_urls()
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -3,6 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$/../../.." vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../../django_course_practice_(mosh)/storefront3-render" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../../../flask/flask_app_final_working" vcs="Git" />
   </component>
 </project>
