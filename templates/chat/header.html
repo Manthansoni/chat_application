@@ -1,0 +1,66 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Document</title>
+    <style>
+        .banner-area{
+            background-image: url('{% static 'background.png' %}');
+            background-position: center center;
+            background-size:cover ;
+            /* -webkit-background-size:cover ; */
+            height: 7vh;
+            width: auto;
+            margin: auto;
+        }
+        .menu{
+            float: right;
+            list-style: none;
+            margin-top:30px;
+        }
+        .menu ul li{
+            display: inline-block;
+        }
+        .menu ul li a{
+            color: #fff;
+            text-decoration: none;
+            padding: 5px 20px;
+            font-family: 'poppins' ,sans-serif;
+            font-size: 16px;
+        }
+        .menu ul li a:hover{
+            color: rgb(199, 139, 255);
+        }
+         .menu button{
+            color: #fff;
+            text-decoration: none;
+            padding: 2px 20px;
+            font-family: 'poppins' ,sans-serif;
+            font-size: 16px;
+            border:none;
+            background:none;
+        }
+    </style>
+</head>
+<body>
+<div class="banner-area">
+    <header>
+        <div class="menu">
+            <ul>
+                <li><a>Hello {{request.user}}</a></li>
+                <li><a href="new_chat">Start New Chat</a></li>
+                <li>
+                    {% if request.user.is_authenticated %}
+                    <form action="{% url 'logout-user' %}" method="post">{% csrf_token %}
+                        <button type="submit">Logout</button>
+                    </form>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </header>
+</div>
+</body>
+</html>

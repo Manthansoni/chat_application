@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-top: 24px;
+            min-height: 90vh;
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <div>
+        <!-- to display current login user information  -->
+        <div id="userInfo">
+            <div style="display: flex; flex-direction: column; align-items: center; width: 300px;">
+                <h1>Hello, {{sender}}</h1>
+            </div>
+
+        </div>
+
+        <!-- to make a call with name -->
+        <div id="call">
+            <div class="dialWrapper">
+                <input id="callName" name="callName"
+                       placeholder="Whom to call?" readonly style="text-align:center; height: 50px; font-size: xx-large;" type="text" value="{{receiver}}">
+                <div class="dialNumpadHWrapper">
+                    <div class="dialNumber">
+                    </div>
+                    <div class="dialNumber">
+                        <button class="dialActionButton" onclick="call()">Call</button>
+                    </div>
+                    <div class="dialNumber">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- to show incommming call and accept -->
+        <div id="answer">
+            <div class="incomingWrapper">
+                <div class="itemWrapper">
+                    <h2>Incomming Call</h2>
+                </div>
+                <div class="itemWrapper">
+                    <img alt="" id="profileImageA"
+                         src="https://i.imgur.com/DY6gND0.png" style="padding: 30px; width: 140px; height: 140px;">
+                </div>
+                <div class="itemWrapper">
+                    <h2 style="line-height: 0px;"><span id="callerName"></span></h2>
+                </div>
+                <div class="itemWrapper" style="display: flex; flex-direction: row; margin-bottom: 20px;">
+                    <button class="actionButton" onclick="answer()">Answer</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- to show outgoing call -->
+        <div id="calling">
+            <div class="incomingWrapper">
+                <div class="itemWrapper">
+                    <h2>Calling</h2>
+                </div>
+                <div class="itemWrapper">
+                    <img alt="" id="profileImageCA"
+                         src="https://i.imgur.com/HYcn9xO.png" style="padding: 30px; width: 140px; height: 140px;">
+                </div>
+                <div class="itemWrapper">
+                    <h3 style="line-height: 0px;"><span id="otherUserNameCA"></span></h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- to show call in progress call -->
+        <div id="inCall">
+            <div class="incomingWrapper">
+                <div class="itemWrapper">
+                    <h3>On Call With</h3>
+                    <h2 style="line-height: 0px;"><span id="otherUserNameC"></span></h2>
+                </div>
+            </div>
+            <button onclick="goBackt()">Back</button>
+        </div>
+
+
+        <br>
+
+        <!-- to show local and remote video -->
+        <div id="videos">
+            <div style="position:absolute; top:0; right:0; padding-right: 20px; padding-top: 20px">
+                <video autoplay id="localVideo" muted playsinline width="100px"></video>
+            </div>
+            <div id="remoteVideoDiv">
+                <video autoplay id="remoteVideo" playsinline style="width: 500px;"></video>
+            </div>
+        </div>
+        <div style="flex-grow: 1;">
+        </div>
+    </div>
+
+
+    <script src="/static/call.js"></script>
+    <script>
+        document.getElementById("call").style.display = "none";
+        document.getElementById("userInfo").style.display = "none";
+        document.getElementById("answer").style.display = "none";
+        document.getElementById("inCall").style.display = "none";
+        document.getElementById("calling").style.display = "none";
+        document.getElementById("videos").style.display = "none";
+
+    </script>
+    <script>
+        let userName = "{{sender}}";
+        myName = userName;
+        document.getElementById("call").style.display = "block";
+        document.getElementById("userInfo").style.display = "block";
+        const roomName = "{{ roomName }}";
+        console.log(roomName);
+        connectSocket(roomName);
+
+        function goBack() {
+            window.history.back(); // Goes back to the previous page
+        }
+    </script>
+</body>
+</html>

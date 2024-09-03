@@ -1,0 +1,280 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="{% static 'style.css' %}" rel="stylesheet">
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="menu">
+    <div class="back">
+        <a href="/" style="text-decoration:none;color:white">
+            <i class="fa fa-chevron-left"></i>
+        </a>
+        <img draggable="false" src="https://i.imgur.com/DY6gND0.png"/>
+    </div>
+    <div class="name">{{username}}</div>
+    <div class="last">{{timestamp}}</div>
+    <form action="videocall/" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="receiver" id="receiver" value="{{username}}">
+        <input type="hidden" name="sender" id="sender" value="{{request.user}}">
+        <input type="hidden" name="roomName" id="roomName" value="{{room_name}}">
+        <button class="video_call" type="submit"><img src="{% static 'video_call.png'%}" height="34px" width="34px"></button>
+    </form>
+
+</div>
+<ol class="chat" id="id_chat_item_container">
+    {% for i in messages %}
+    {% if i.sender.id == user.id %}
+    <li class="self">
+        <div class="avatar">
+            <img draggable="false" src="https://i.imgur.com/HYcn9xO.png"/>
+        </div>
+        <div class="msg">
+            <p> {% if i.media != None %}
+                    <a href="{% static 'media/' %}{{i.media}}"><img src="{% static 'media/' %}{{i.media}}" alt="img"></a>
+                {% else %}
+                     {{i.content}}
+                {% endif %}
+            </p>
+            <time>{{i.timestamp}}</time>
+        </div>
+    </li>
+    {% else %}
+    <li class="other">
+        <div class="avatar"><img draggable="false" src="https://i.imgur.com/DY6gND0.png"/></div>
+        <div class="msg">
+            <p> {% if i.media != None %}
+                <a href="{% static 'media/' %}{{i.media}}"><img src="{% static 'media/' %}{{i.media}}" alt="img"></a>
+                {% else %}
+                     {{i.content}}
+                {% endif %}
+            </p>
+            <time>{{i.timestamp}}</time>
+        </div>
+    </li>
+    {%endif%}
+    {% endfor %}
+</ol>
+<div>
+    <div class="emoji-picker" id="emojiPicker">
+        <span class="emoji" onclick="addEmoji('😀')">😀</span>
+        <span class="emoji" onclick="addEmoji('😂')">😂</span>
+        <span class="emoji" onclick="addEmoji('😍')">😍</span>
+        <span class="emoji" onclick="addEmoji('👍')">👍</span>
+        <span class="emoji" onclick="addEmoji('😎')">😎</span>
+        <span class="emoji" onclick="addEmoji('🎉')">🎉</span>
+    </div>
+
+    <button class="emojis trigger-btn" onclick="toggleEmojiPicker()"></button>
+    <input class="textarea" id="id_message_send_input" placeholder="Type here!" required type="text" value=""/>
+    <div class="pin" onclick="document.getElementById('imageUpload').click();"></div>
+    <button class="send_message" id="id_message_send_button" type="submit"></button>
+</div>
+
+<!--<div class="emoji-picker" id="emojiPicker">-->
+<!--					<li class="emoji" data-clipboard-text="&#45;&#45;1"><emoji class="please"/></li>-->
+<!--					<li class="emoji" data-clipboard-text="-1"><emoji class="lmao"/></li>-->
+<!--					<li class="emoji" data-clipboard-text="1"><emoji class="happy"/></li>-->
+<!--                    <li class="emoji" data-clipboard-text="&#45;&#45;1"><emoji class="pizza"/></li>-->
+<!--					<li class="emoji" data-clipboard-text="-1"><emoji class="cryalot"/></li>-->
+<!--					<li class="emoji" data-clipboard-text="1"><emoji class="books"/></li>-->
+<!--                    <li class="emoji" data-clipboard-text="&#45;&#45;1"><emoji class="moai"/></li>-->
+<!--					<li class="emoji" data-clipboard-text="-1"><emoji class="suffocated"/></li>-->
+<!--					<li class="emoji" data-clipboard-text="1"><emoji class="scream"/></li>-->
+<!--                    <li class="emoji" data-clipboard-text="&#45;&#45;1"><emoji class="hearth_blue"/></li>-->
+<!--					<li class="emoji" data-clipboard-text="-1"><emoji class="funny"/></li>-->
+<!--</div>-->
+
+<input accept="image/*" id="imageUpload" onchange="handleFileUpload(event)" type="file"/>
+
+<script>
+    // Function to toggle the emoji picker
+        function toggleEmojiPicker() {
+            const emojiPicker = document.getElementById('emojiPicker');
+            if (emojiPicker.style.display === 'none' || emojiPicker.style.display === '') {
+                emojiPicker.style.display = 'block';
+            } else {
+                emojiPicker.style.display = 'none';
+            }
+        }
+
+        // Function to add emoji to the text
+        function addEmoji(emoji) {
+            const emojiContainer = document.getElementById('id_message_send_input');
+            emojiContainer.value += emoji;
+        }
+
+        // Close emoji picker if clicked outside
+        document.addEventListener('click', function (event) {
+            const emojiPicker = document.getElementById('emojiPicker');
+            const triggerBtn = document.querySelector('.trigger-btn');
+
+            if (!emojiPicker.contains(event.target) && event.target !== triggerBtn) {
+                emojiPicker.style.display = 'none';
+            }
+        });
+
+    window.scrollTo(0, document.body.scrollHeight);
+    const roomName = "{{ room_name }}";
+    const userId = "{{ request.user.id }}";
+    const username = "{{ request.user.username }}";
+    const receiverId = "{{ userid }}"
+    const chatSocket = new WebSocket("ws://" + window.location.host + '/ws/chat/' + roomName + '/');
+
+
+    // Function to handle file upload
+    function handleFileUpload(event) {
+        const file = event.target.files[0];
+        if (file) {
+            console.log(`File "${file.name}" selected!`);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const base64Image = reader.result.split(',')[1]; // Get base64 data
+                chatSocket.send(JSON.stringify({ image_data: base64Image, file_name: file.name, sender_id: userId, receiver_id: receiverId }));
+            };
+
+            reader.readAsDataURL(file);  // Read file as Base64
+
+            // You can upload the file via AJAX or perform other actions here
+            // For demonstration, we'll simply log it to the console
+            console.log(file);
+            chatSocket.send(JSON.stringify({ message: messageInput, sender_id: userId, receiver_id: receiverId}));
+        }
+    }
+
+    chatSocket.onopen = function (e) {
+      console.log("The connection was setup successfully !");
+    };
+    chatSocket.onclose = function (e) {
+      console.log(e);
+    };
+
+    document.querySelector("#id_message_send_input").focus();
+    document.querySelector("#id_message_send_input").onkeyup = function (e) {
+      if (e.keyCode == 13) {
+        document.querySelector("#id_message_send_button").click();
+      }
+    };
+
+    document.querySelector("#id_message_send_button").onclick = function (e) {
+      var messageInput = document.querySelector(
+        "#id_message_send_input"
+      ).value;
+
+      if (messageInput != ""){
+        chatSocket.send(JSON.stringify({ message: messageInput, sender_id: userId, receiver_id: receiverId}));
+        }
+      else{
+        alert("Enter valid message");
+      }
+
+    };
+
+
+    chatSocket.onmessage = function (e) {
+      const data = JSON.parse(e.data);
+      if (data.sender != username){
+        if (data.media != null){
+            var element = document.createElement("li");
+            element.classList.add("other");
+            var div = document.createElement("div");
+            div.classList.add("avatar");
+            let img = document.createElement("img");
+            img.src = "https://i.imgur.com/DY6gND0.png";
+            img.draggable = "false";
+            div.append(img)
+            var div2 = document.createElement("div");
+            div2.classList.add("msg");
+            let anc = document.createElement("a");
+            let img1 = document.createElement("img");
+            img1.src = "{% static 'media/' %}" + data.media;
+            let p2 = document.createElement("time");
+            p2.textContent = data.timestamp;
+            anc.appendChild(img1);
+            anc.href = "{% static 'media/' %}" + data.media;
+            div2.appendChild(anc);
+            div2.appendChild(p2);
+            document.querySelector("#id_message_send_input").value = "";
+            element.append(div)
+            element.append(div2)
+            document.querySelector("#id_chat_item_container").appendChild(element);
+        }
+        else{
+            var element = document.createElement("li");
+            element.classList.add("other");
+            var div = document.createElement("div");
+            div.classList.add("avatar");
+            let img = document.createElement("img");
+            img.src = "https://i.imgur.com/DY6gND0.png";
+            img.draggable = "false";
+            div.append(img)
+            var div2 = document.createElement("div");
+            div2.classList.add("msg");
+            let p = document.createElement("p");
+            p.textContent = data.message;
+            let p2 = document.createElement("time");
+            p2.textContent = data.timestamp;
+            div2.appendChild(p);
+            div2.appendChild(p2);
+            document.querySelector("#id_message_send_input").value = "";
+            element.append(div)
+            element.append(div2)
+            document.querySelector("#id_chat_item_container").appendChild(element);
+        }
+      }
+      else{
+        if (data.media != null){
+            var element = document.createElement("li");
+            element.classList.add("self");
+            var div = document.createElement("div");
+            div.classList.add("avatar");
+            let img = document.createElement("img");
+            img.src = "https://i.imgur.com/HYcn9xO.png";
+            img.draggable = "false";
+            div.append(img)
+            var div2 = document.createElement("div");
+            div2.classList.add("msg");
+            let anc = document.createElement("a");
+            let img1 = document.createElement("img");
+            img1.src = "{% static 'media/' %}"+ data.media;
+            let p2 = document.createElement("time");
+            p2.textContent = data.timestamp;
+            anc.appendChild(img1);
+            anc.href = "{% static 'media/' %}" + data.media;
+            div2.appendChild(anc);
+            div2.appendChild(p2);
+            document.querySelector("#id_message_send_input").value = "";
+            element.append(div)
+            element.append(div2)
+            document.querySelector("#id_chat_item_container").appendChild(element);
+        }
+        else{
+            var element = document.createElement("li");
+            element.classList.add("self");
+            var div = document.createElement("div");
+            div.classList.add("avatar");
+            let img = document.createElement("img");
+            img.src = "https://i.imgur.com/HYcn9xO.png";
+            img.draggable = "false";
+            div.append(img)
+            var div2 = document.createElement("div");
+            div2.classList.add("msg");
+            let p = document.createElement("p");
+            p.textContent = data.message;
+            let p2 = document.createElement("time");
+            p2.textContent = data.timestamp;
+            div2.appendChild(p);
+            div2.appendChild(p2);
+            document.querySelector("#id_message_send_input").value = "";
+            element.append(div)
+            element.append(div2)
+            document.querySelector("#id_chat_item_container").appendChild(element);
+        }
+      }
+    };
+</script>
+</body>
+</html>

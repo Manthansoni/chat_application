@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="{% static 'My_chats.css' %}" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+</head>
+<body>
+{% include "chat/header.html" %}
+<div id="chatbox">
+    <div id="friendslist">
+        <div id="friends">
+            {% for i,j in chats.items %}
+            <form action="chat/" method="POST">
+                {% csrf_token %}
+                <input name="userid" type="hidden" value="{{i.id}}">
+                <input name="username" type="hidden" value="{{i}}">
+                <input name="room_name" type="hidden" value="{{j}}">
+
+                <div class="friend">
+                    <img src="https://i.imgur.com/DY6gND0.png"/>
+                    <p>
+                        <strong>{{i}}</strong>
+<!--                        <span>{{j}}</span>-->
+                        <button type="submit">View Chat</button>
+                    </p>
+
+                    <div class="status available"></div>
+                </div>
+            </form>
+            <br>
+            {%endfor%}
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+</body>
+</html>

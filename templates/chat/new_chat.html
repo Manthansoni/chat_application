@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Start new Chat</title>
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <style>
+        .banner-area{
+            background-image: url('https://images.unsplash.com/photo-1494500764479-0c8f2919a3d8?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYzNzU5MjE4OA&ixlib=rb-1.2.1&q=85');
+            background-position: center center;
+            background-size:cover ;
+            /* -webkit-background-size:cover ; */
+            height: 100vh;
+            width: auto;
+            margin: auto;
+
+        }
+        .main{
+            width:500px;
+            background:#fff;
+            border-radius:6px;
+            overflow:hidden;
+            height:400px;
+            position:absolute;
+            top:150px;
+            left:45%;
+            margin-left:-155px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 16px;
+            margin-top:50px;
+        }
+
+        input {
+            width: 60%;
+            padding: 12px;
+            margin-bottom:50px;
+            border: 2px solid #000;
+            box-shadow: 3px 3px 0 #000;
+            font-size: 14px;
+        }
+
+        .btnhtml {
+            color: black;
+            background-color: #9A8CED;
+            border: 2px solid #000;
+            padding: 12px;
+            margin-bottom:20px;
+            width: 50%;
+            cursor: pointer;
+            box-shadow: 3px 3px 0 #000;
+            font-size: 16px;
+        }
+
+        .btnhtml:hover {
+            background-color: #ffeb3b;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="banner-area">
+    {% for message in messages %}
+        <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ message | safe }}
+        </div>
+        {% endfor %}
+    <div class="main">
+        <h1>Start new Chat</h1>
+        <form method="post">
+            {% csrf_token %}
+            <label for="recipient">Recipient:</label>
+            <input id="recipient" name="recipient" required type="text">
+            <button class="btnhtml" type="submit">Send</button>
+        </form>
+        <a href="/" style="text-decoration: none;">
+            <button class="btnhtml">Back</button>
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

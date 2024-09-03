@@ -1,0 +1,80 @@
+* { margin: 0px; padding: 0px; }
+body {
+	background: #f0f1f2;
+	font:12px "Open Sans", sans-serif;
+}
+#chatbox{
+	width:50%;
+	background:#fff;
+	border-radius:6px;
+	overflow:hidden;
+	height:484px;
+	position:absolute;
+	top:150px;
+	left:35%;
+	margin-left:-155px;
+}
+
+#friendslist{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:484px;
+}
+
+#friends button{
+    background:#A4E2FF;
+    margin: 10px;
+    padding: 5px;
+    border-radius:12px;
+    cursor:pointer;
+}
+
+.friend{
+	height:70px;
+	border-bottom:1px solid #e7ebee;
+	position:relative;
+}
+.friend img{
+	width:40px;
+	border-radius:50%;
+	margin:15px;
+	float:left;
+}
+.floatingImg{
+	width:40px;
+	border-radius:50%;
+	position:absolute;
+	top:0;
+	left:12px;
+	border:3px solid #fff;
+}
+.friend p{
+	padding:15px 0 0 0;
+	float:left;
+	width:220px;
+}
+.friend p strong{
+  font-weight:600;
+  font-size:15px;
+	color:#597a96;
+
+}
+.friend p span{
+	font-size:13px;
+	font-weight:400;
+	color:#aab8c2;
+}
+.friend .status{
+	background:#26c281;
+	border-radius:50%;
+	width:9px;
+	height:9px;
+	position:absolute;
+	top:31px;
+	right:17px;
+}
+.friend .status.away{background:#ffce54;}
+.friend .status.inactive{background:#eaeef0;}
+
