@@ -166,3 +166,5 @@ try:
     }
 except Exception as e:
     pass
+
+CSRF_TRUSTED_ORIGINS = ['https://chat-application-8dwd.onrender.com']
