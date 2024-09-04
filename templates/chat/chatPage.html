@@ -7,6 +7,10 @@
 </head>
 <body>
 
+<div id="loader-wrapper" style="display: block;">
+        <div id="loader"></div>
+    </div>
+
 <div class="menu">
     <div class="back">
         <a href="/" style="text-decoration:none;color:white">
@@ -147,6 +151,10 @@
 
     chatSocket.onopen = function (e) {
       console.log("The connection was setup successfully !");
+      var foo = document.getElementById('loader-wrapper');
+        if (foo.style.display == 'block') {
+                foo.style.display = 'none';
+            }
     };
     chatSocket.onclose = function (e) {
       console.log(e);

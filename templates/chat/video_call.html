@@ -1,21 +1,19 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>Document</title>
+    <link href="{% static 'call.css' %}" rel="stylesheet">
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding-top: 24px;
-            min-height: 90vh;
-        }
     </style>
 </head>
 <body>
+
+<div id="loader-wrapper" style="display: block;">
+        <div id="loader"></div>
+    </div>
 
 <div>
     <div>
@@ -110,6 +108,7 @@
 
     <script src="/static/call.js"></script>
     <script>
+
         document.getElementById("call").style.display = "none";
         document.getElementById("userInfo").style.display = "none";
         document.getElementById("answer").style.display = "none";

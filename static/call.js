@@ -74,6 +74,11 @@ function connectSocket(roomName) {
             }
         }));
         console.log("connected");
+        var foo = document.getElementById('loader-wrapper');
+        if (foo.style.display == 'block') {
+                foo.style.display = 'none';
+            }
+
     }
 
     callSocket.onmessage = (e) =>{
