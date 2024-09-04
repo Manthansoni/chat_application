@@ -40,7 +40,7 @@
         <div class="msg">
             <p> {% if i.media != None %}
                     {{i.media.title}}
-                    <a href="{{i.media}}"><img src="data:image/jpeg;base64,{{ i.media|b64encode }}" alt="img"></a>
+                    <a href="data:image/jpeg;base64,{{ i.media|b64encode }}"><img src="data:image/jpeg;base64,{{ i.media|b64encode }}" alt="img"></a>
                 {% else %}
                      {{i.content}}
                 {% endif %}
@@ -54,7 +54,7 @@
         <div class="msg">
             <p> {% if i.media != None %}
                 {{i.media.id}}
-                <a href="{{i.media}}"><img src="{% url 'display_image' image_id=i.media.id %}" alt="img"></a>
+                <a href="data:image/jpeg;base64,{{ i.media|b64encode }}"><img src="data:image/jpeg;base64,{{ i.media|b64encode }}" alt="img"></a>
                 {% else %}
                      {{i.content}}
                 {% endif %}
