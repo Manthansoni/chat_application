@@ -6,6 +6,11 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
+
+<div id="loader-wrapper" style="display: block;">
+        <div id="loader"></div>
+    </div>
+
 {% include "chat/header.html" %}
 <div id="chatbox">
     <div id="friendslist">
@@ -36,5 +41,14 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var foo = document.getElementById('loader-wrapper');
+        if (foo.style.display == 'block') {
+                foo.style.display = 'none';
+            }
+    });
+
+</script>
 </body>
 </html>
