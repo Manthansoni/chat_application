@@ -1,3 +1,4 @@
+{% load custom_filters %}
 {% load static %}
 <!DOCTYPE html>
 <html>
@@ -38,7 +39,8 @@
         </div>
         <div class="msg">
             <p> {% if i.media != None %}
-                    <a href="{% static 'media/' %}{{i.media}}"><img src="{% static 'media/' %}{{i.media}}" alt="img"></a>
+                    {{i.media.title}}
+                    <a href="{{i.media}}"><img src="data:image/jpeg;base64,{{ i.media|b64encode }}" alt="img"></a>
                 {% else %}
                      {{i.content}}
                 {% endif %}
@@ -51,7 +53,8 @@
         <div class="avatar"><img draggable="false" src="https://i.imgur.com/DY6gND0.png"/></div>
         <div class="msg">
             <p> {% if i.media != None %}
-                <a href="{% static 'media/' %}{{i.media}}"><img src="{% static 'media/' %}{{i.media}}" alt="img"></a>
+                {{i.media.id}}
+                <a href="{{i.media}}"><img src="{% url 'display_image' image_id=i.media.id %}" alt="img"></a>
                 {% else %}
                      {{i.content}}
                 {% endif %}
@@ -136,7 +139,7 @@
             console.log(`File "${file.name}" selected!`);
             const reader = new FileReader();
             reader.onloadend = () => {
-                const base64Image = reader.result.split(',')[1]; // Get base64 data
+                const base64Image = reader.result // Get base64 data
                 chatSocket.send(JSON.stringify({ image_data: base64Image, file_name: file.name, sender_id: userId, receiver_id: receiverId }));
             };
 

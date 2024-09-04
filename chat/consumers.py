@@ -4,6 +4,7 @@ from user.models import MyUser as User
 from .models import Message
 from asgiref.sync import async_to_sync
 import datetime
+from django.core.files.base import ContentFile
 import base64
 
 class ChatConsumer(WebsocketConsumer):
@@ -38,20 +39,24 @@ class ChatConsumer(WebsocketConsumer):
             recipient = User.objects.get(id=user_id)
             sender = self.scope['user']
 
-            base64_image_data = text_data_json.get('image_data')
+            image_data = text_data_json.get('image_data')
             file_name = text_data_json.get('file_name')
             if file_name:
                 file_name = self.room_name+ "_" + file_name
 
-            if base64_image_data and file_name:
+            if image_data and file_name:
                 print("Inside images")
                 # Decode the Base64 image data
-                image_data = base64.b64decode(base64_image_data)
-
+                # image_data = ContentFile(base64.b64decode(base64_image_data), name = file_name)
                 # Save the image to a file
-                with open(f"static/media/{file_name}", "wb") as f:
-                    f.write(image_data)
-                    Message.objects.create(sender=sender, receiver=recipient, media=file_name)
+                # with open(f"static/media/{file_name}", "wb") as f:
+                #     f.write(image_data)
+                format, imgstr = image_data.split(';base64,')
+                ext = format.split('/')[-1]  # Extract the file extension (e.g., png, jpeg)
+
+                # Decode the image and save it as binary data
+                binary_image = base64.b64decode(imgstr)
+                Message.objects.create(sender=sender, receiver=recipient, media=binary_image)
 
             message = ''
             if text_data_json.get("message") is not None:
