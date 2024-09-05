@@ -54,6 +54,7 @@ class ChatConsumer(WebsocketConsumer):
                 binary_image = base64.b64decode(imgstr)
                 Message.objects.create(sender=sender, receiver=recipient, media=binary_image)
 
+
             message = ''
             if text_data_json.get("message") is not None:
                 message = text_data_json["message"]

@@ -129,7 +129,7 @@
     const userId = "{{ request.user.id }}";
     const username = "{{ request.user.username }}";
     const receiverId = "{{ userid }}"
-    const chatSocket = new WebSocket("wss://" + window.location.host + '/ws/chat/' + roomName + '/');
+    const chatSocket = new WebSocket("ws://" + window.location.host + '/ws/chat/' + roomName + '/');
 
 
     // Function to handle file upload
@@ -189,29 +189,7 @@
       const data = JSON.parse(e.data);
       if (data.sender != username){
         if (data.media != null){
-            var element = document.createElement("li");
-            element.classList.add("other");
-            var div = document.createElement("div");
-            div.classList.add("avatar");
-            let img = document.createElement("img");
-            img.src = "https://i.imgur.com/DY6gND0.png";
-            img.draggable = "false";
-            div.append(img)
-            var div2 = document.createElement("div");
-            div2.classList.add("msg");
-            let anc = document.createElement("a");
-            let img1 = document.createElement("img");
-            img1.src = "data:image/jpeg;base64,{{ data.media|b64encode }}";
-            let p2 = document.createElement("time");
-            p2.textContent = data.timestamp;
-            anc.appendChild(img1);
-            anc.href = "data:image/jpeg;base64,{{ data.media|b64encode }}";
-            div2.appendChild(anc);
-            div2.appendChild(p2);
-            document.querySelector("#id_message_send_input").value = "";
-            element.append(div)
-            element.append(div2)
-            document.querySelector("#id_chat_item_container").appendChild(element);
+            window.location.reload()
         }
         else{
             var element = document.createElement("li");
@@ -238,29 +216,7 @@
       }
       else{
         if (data.media != null){
-            var element = document.createElement("li");
-            element.classList.add("self");
-            var div = document.createElement("div");
-            div.classList.add("avatar");
-            let img = document.createElement("img");
-            img.src = "https://i.imgur.com/HYcn9xO.png";
-            img.draggable = "false";
-            div.append(img)
-            var div2 = document.createElement("div");
-            div2.classList.add("msg");
-            let anc = document.createElement("a");
-            let img1 = document.createElement("img");
-            img1.src = "data:image/jpeg;base64,{{ data.media|b64encode }}";
-            let p2 = document.createElement("time");
-            p2.textContent = data.timestamp;
-            anc.appendChild(img1);
-            anc.href = "data:image/jpeg;base64,{{ data.media|b64encode }}";
-            div2.appendChild(anc);
-            div2.appendChild(p2);
-            document.querySelector("#id_message_send_input").value = "";
-            element.append(div)
-            element.append(div2)
-            document.querySelector("#id_chat_item_container").appendChild(element);
+            window.location.reload()
         }
         else{
             var element = document.createElement("li");
