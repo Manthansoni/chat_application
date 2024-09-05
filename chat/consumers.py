@@ -41,7 +41,7 @@ class ChatConsumer(WebsocketConsumer):
 
             image_data = text_data_json.get('image_data')
             file_name = text_data_json.get('file_name')
-            binary_image = None
+            binary_image = ""
 
             if file_name:
                 file_name = self.room_name+ "_" + file_name
@@ -63,7 +63,7 @@ class ChatConsumer(WebsocketConsumer):
             async_to_sync(self.channel_layer.group_send)(
                 self.room_group_name, {
                     'type': 'chat_message',
-                    'media': binary_image,
+                    'media': file_name,
                     'message': message,
                     'sender': sender.username,
                 })
