@@ -201,11 +201,11 @@
             div2.classList.add("msg");
             let anc = document.createElement("a");
             let img1 = document.createElement("img");
-            img1.src = "{% static 'media/' %}" + data.media;
+            img1.src = "data:image/jpeg;base64,{{ data.media|b64encode }}";
             let p2 = document.createElement("time");
             p2.textContent = data.timestamp;
             anc.appendChild(img1);
-            anc.href = "{% static 'media/' %}" + data.media;
+            anc.href = "data:image/jpeg;base64,{{ data.media|b64encode }}";
             div2.appendChild(anc);
             div2.appendChild(p2);
             document.querySelector("#id_message_send_input").value = "";
@@ -250,11 +250,11 @@
             div2.classList.add("msg");
             let anc = document.createElement("a");
             let img1 = document.createElement("img");
-            img1.src = "{% static 'media/' %}"+ data.media;
+            img1.src = "data:image/jpeg;base64,{{ data.media|b64encode }}";
             let p2 = document.createElement("time");
             p2.textContent = data.timestamp;
             anc.appendChild(img1);
-            anc.href = "{% static 'media/' %}" + data.media;
+            anc.href = "data:image/jpeg;base64,{{ data.media|b64encode }}";
             div2.appendChild(anc);
             div2.appendChild(p2);
             document.querySelector("#id_message_send_input").value = "";
