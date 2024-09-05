@@ -129,7 +129,7 @@
     const userId = "{{ request.user.id }}";
     const username = "{{ request.user.username }}";
     const receiverId = "{{ userid }}"
-    const chatSocket = new WebSocket("ws://" + window.location.host + '/ws/chat/' + roomName + '/');
+    const chatSocket = new WebSocket("wss://" + window.location.host + '/ws/chat/' + roomName + '/');
 
 
     // Function to handle file upload
