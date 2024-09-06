@@ -19,14 +19,6 @@
     </div>
 
 <div>
-    <div>
-        <!-- to display current login user information  -->
-        <div id="userInfo">
-            <div style="display: flex; flex-direction: column; align-items: center; width: 300px;">
-                <h1>Hello, {{sender}}</h1>
-            </div>
-
-        </div>
 
         <!-- to make a call with name -->
         <div id="call">
@@ -85,11 +77,10 @@
         <div id="inCall">
             <div class="incomingWrapper">
                 <div class="itemWrapper">
-                    <h3>On Call With</h3>
-                    <h2 style="line-height: 0px;"><span id="otherUserNameC"></span></h2>
+                    <h3>On Call With <span id="otherUserNameC"></span></h3>
                 </div>
             </div>
-            <button onclick="goBackt()">Back</button>
+            <button onclick="stop()">Stop</button>
         </div>
 
 
@@ -97,11 +88,11 @@
 
         <!-- to show local and remote video -->
         <div id="videos">
-            <div style="position:absolute; top:0; right:0; padding-right: 20px; padding-top: 20px">
-                <video autoplay id="localVideo" muted playsinline width="100px"></video>
+            <div style="position:absolute; top:70vh; right:0; padding-right: 20px; padding-top: 20px">
+                <video autoplay id="localVideo" muted playsinline style="width:25vw;"></video>
             </div>
             <div id="remoteVideoDiv">
-                <video autoplay id="remoteVideo" playsinline style="width: 500px;"></video>
+                <video autoplay id="remoteVideo" playsinline style="width: 90vw;"></video>
             </div>
         </div>
         <div style="flex-grow: 1;">
@@ -113,7 +104,6 @@
     <script>
 
         document.getElementById("call").style.display = "none";
-        document.getElementById("userInfo").style.display = "none";
         document.getElementById("answer").style.display = "none";
         document.getElementById("inCall").style.display = "none";
         document.getElementById("calling").style.display = "none";
@@ -121,17 +111,14 @@
 
     </script>
     <script>
+
         let userName = "{{sender}}";
         myName = userName;
         document.getElementById("call").style.display = "block";
-        document.getElementById("userInfo").style.display = "block";
         const roomName = "{{ roomName }}";
         console.log(roomName);
         connectSocket(roomName);
 
-        function goBack() {
-            window.history.back(); // Goes back to the previous page
-        }
     </script>
 </body>
 </html>

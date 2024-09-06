@@ -34,6 +34,8 @@
         <input type="hidden" name="roomName" id="roomName" value="{{room_name}}">
         <button class="video_call" type="submit"><img src="{% static 'video_call.png'%}" height="34px" width="34px"></button>
     </form>
+<!--    <button class="video_call html" type="submit"><img src="{% static 'video_call.png'%}" height="34px" width="34px"></button>-->
+
 
 </div>
 <ol class="chat" id="id_chat_item_container">
@@ -87,6 +89,7 @@
     <button class="send_message" id="id_message_send_button" type="submit"></button>
 </div>
 
+
 <!--<div class="emoji-picker" id="emojiPicker">-->
 <!--					<li class="emoji" data-clipboard-text="&#45;&#45;1"><emoji class="please"/></li>-->
 <!--					<li class="emoji" data-clipboard-text="-1"><emoji class="lmao"/></li>-->
@@ -103,6 +106,7 @@
 
 <input accept="image/*" id="imageUpload" onchange="handleFileUpload(event)" type="file"/>
 
+<script src="/static/call.js"></script>
 <script>
     // Function to toggle the emoji picker
         function toggleEmojiPicker() {
@@ -135,7 +139,7 @@
     const userId = "{{ request.user.id }}";
     const username = "{{ request.user.username }}";
     const receiverId = "{{ userid }}"
-    const chatSocket = new WebSocket("wss://" + window.location.host + '/ws/chat/' + roomName + '/');
+    const chatSocket = new WebSocket("ws://" + window.location.host + '/ws/chat/' + roomName + '/');
 
 
     // Function to handle file upload
@@ -191,8 +195,16 @@
     };
 
 
-    chatSocket.onmessage = function (e) {
+    chatSocket.onmessage = (e) =>{
+
       const data = JSON.parse(e.data);
+      let type = data.type;
+      console.log(type)
+             if(type == 'call_received') {
+            window.location.href = "videocall/";
+            onNewCall(response.data)
+        }
+
       if (data.sender != username){
         if (data.media != null){
             window.location.reload()

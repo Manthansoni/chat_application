@@ -63,7 +63,7 @@ let socket;
 let callSocket;
 function connectSocket(roomName) {
 
-    callSocket = new WebSocket("wss://" + window.location.host + '/ws/chat/' + roomName + '/');
+    callSocket = new WebSocket("ws://" + window.location.host + '/ws/chat/' + roomName + '/');
 
     callSocket.onopen = event =>{
     //let's send myName to the socket
@@ -83,6 +83,7 @@ function connectSocket(roomName) {
 
     callSocket.onmessage = (e) =>{
         let response = JSON.parse(e.data);
+        console.log(response.data);
 
         // console.log(response);
 
@@ -93,7 +94,7 @@ function connectSocket(roomName) {
         }
 
         if(type == 'call_received') {
-            // console.log(response);
+//             console.log(response);
             onNewCall(response.data)
         }
 
@@ -353,7 +354,7 @@ function stop() {
     document.getElementById("answer").style.display = "none";
     document.getElementById("inCall").style.display = "none";
     document.getElementById("calling").style.display = "none";
-    document.getElementById("endVideoButton").style.display = "none"
+    document.getElementById("videos").style.display = "none";
     otherUser = null;
 }
 
