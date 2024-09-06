@@ -63,7 +63,7 @@ let socket;
 let callSocket;
 function connectSocket(roomName) {
 
-    callSocket = new WebSocket("ws://" + window.location.host + '/ws/chat/' + roomName + '/');
+    callSocket = new WebSocket("wss://" + window.location.host + '/ws/chat/' + roomName + '/');
 
     callSocket.onopen = event =>{
     //let's send myName to the socket
