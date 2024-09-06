@@ -125,10 +125,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-STATICFILES_DIRS=[
-    os.path.join(BASE_DIR,'static'),
-]
+
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -137,8 +136,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ASGI_APPLICATION = 'chat_application.asgi.application'
 
-# REDIS_URL = os.environ['REDIS_URL']
-REDIS_URL = "redis://127.0.0.1:6379/"
+REDIS_URL = os.environ['REDIS_URL']
+# REDIS_URL = "redis://127.0.0.1:6379/"
 
 CHANNEL_LAYERS = {
     'default': {
