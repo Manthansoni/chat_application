@@ -4,7 +4,6 @@ from user.models import MyUser as User
 from .models import Message
 from asgiref.sync import async_to_sync
 import datetime
-from django.core.files.base import ContentFile
 import base64
 
 class ChatConsumer(WebsocketConsumer):
@@ -48,8 +47,8 @@ class ChatConsumer(WebsocketConsumer):
 
             if image_data and file_name:
                 print("Inside images")
-                format, imgstr = image_data.split(';base64,')
-                ext = format.split('/')[-1]  # Extract the file extension (e.g., png, jpeg)
+                img_format, imgstr = image_data.split(';base64,')
+                ext = img_format.split('/')[-1]  # Extract the file extension (e.g., png, jpeg)
                 # Decode the image and save it as binary data
                 binary_image = base64.b64decode(imgstr)
                 Message.objects.create(sender=sender, receiver=recipient, media=binary_image)

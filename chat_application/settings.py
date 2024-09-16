@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-gacpduq=-mlg$8tae+u&!+n469i*5muw5f*@b&1lp53(uz_$-o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -136,8 +136,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ASGI_APPLICATION = 'chat_application.asgi.application'
 
-REDIS_URL = os.environ['REDIS_URL']
-# REDIS_URL = "redis://127.0.0.1:6379/"
+# REDIS_URL = os.environ['REDIS_URL']
+REDIS_URL = "redis://127.0.0.1:6379/"
 
 CHANNEL_LAYERS = {
     'default': {
@@ -171,3 +171,5 @@ except Exception as e:
     pass
 
 CSRF_TRUSTED_ORIGINS = ['https://chat-application-8dwd.onrender.com']
+
+handler404 = "chat.views.page_not_found_view"

@@ -8,5 +8,6 @@ urlpatterns = [
     path("new_chat/", chat_views.start_new_chat, name="new-chat"),
     path("chat/", chat_views.chat_page, name="chat-page"),
     path("chat/videocall/", chat_views.video_call, name='videocall'),
+    path("demo", chat_views.demo_view, name='demo'),
 
 ]

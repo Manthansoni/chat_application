@@ -29,6 +29,7 @@ body {
     padding: 5px;
     border-radius:12px;
     cursor:pointer;
+    width:95%;
 }
 
 .friend{
@@ -51,20 +52,20 @@ body {
 	border:3px solid #fff;
 }
 .friend p{
-	padding:15px 0 0 0;
+	padding:20px 0 0 0;
 	float:left;
-	width:220px;
+	width:120px;
 }
 .friend p strong{
   font-weight:600;
-  font-size:15px;
+  font-size:20px;
 	color:#597a96;
 
 }
 .friend p span{
-	font-size:13px;
+	font-size:20px;
 	font-weight:400;
-	color:#aab8c2;
+	color:black;
 }
 .friend .status{
 	background:#26c281;

@@ -6,6 +6,9 @@ from django.contrib import messages
 from user.models import MyUser as User
 from .models import Message, Conversation
 
+def demo_view(request):
+    return render(request, "chat/demo.html")
+
 def register_user(request):
     if request.POST:
         username = request.POST.get("username")
@@ -77,3 +80,6 @@ def start_new_chat(request):
         except ObjectDoesNotExist:
             messages.error(request, "Error: Please enter valid username")
     return render(request, 'chat/new_chat.html')
+
+def page_not_found_view(request):
+    return render(request, '404.html')
