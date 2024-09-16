@@ -1,107 +1,91 @@
-{% load form_filters %}
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <title>MeChat</title>-->
+    <title>MeChat</title>
     <link
             rel="icon"
             href="{% static 'logo.png' %}"
             type="image/x-icon"
         />
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <style>
+        .banner-area{
+            background-image: url('https://images.unsplash.com/photo-1494500764479-0c8f2919a3d8?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYzNzU5MjE4OA&ixlib=rb-1.2.1&q=85');
+            background-position: center center;
+            background-size:cover ;
+            /* -webkit-background-size:cover ; */
+            height: 100vh;
+            width: auto;
+            margin: auto;
 
-    <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,700,800" rel="stylesheet">
+        }
+        .login-container{
+            width:80vw;
+            background:#fff;
+            border-radius:6px;
+            overflow:hidden;
+            height:484px;
+            position:absolute;
+            top:20vh;
+            left:20vw;
+            margin-left:-155px;
+            text-align: center;
+        }
 
-    <link href="{% static 'css/open-iconic-bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/animate.css' %}" rel="stylesheet">
+        label {
+          display: block;
+          margin-bottom: 8px;
+          font-size: 16px;
+        }
 
-    <link href="{% static 'css/owl.carousel.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/owl.theme.default.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/magnific-popup.css' %}" rel="stylesheet">
+        input {
+          width: 50%;
+          padding: 12px;
+          border: 2px solid #000;
+          box-shadow: 3px 3px 0 #000;
+          font-size: 14px;
+        }
 
-    <link href="{% static 'css/aos.css' %}" rel="stylesheet">
+        button {
+          background-color: #9A8CED;
+          border: 2px solid #000;
+          padding: 12px;
+          width: 50%;
+          cursor: pointer;
+          box-shadow: 3px 3px 0 #000;
+          font-size: 16px;
+        }
 
-    <link href="{% static 'css/ionicons.min.css' %}" rel="stylesheet">
+        button:hover {
+          background-color: #ffeb3b;
+        }
 
-    <link href="{% static 'css/flaticon.css' %}" rel="stylesheet">
-    <link href="{% static 'css/icomoon.css' %}" rel="stylesheet">
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+        a{
+            display:block;
+            width:90%;
+            position:absolute;
+            top:350px;
+            left:5%;
+            text-align: center;
+            z-index:100;
+        }
+
+    </style>
 </head>
 <body>
+<div class="banner-area">
+    <div class="login-container">
 
-<div class="hero-wrap js-fullheight">
-    <div class="overlay"></div>
-    <div id="particles-js"></div>
-    <section class="ftco-section">
-        <div class="container bg-light">
-            <center>
-                <div class="p-2">
-                    <div class="col-md-6 mt-5">
-                        <h3 class="m-3">LOGIN</h3>
-                        <form method="post">
-                            {% csrf_token %}
-                            <div class="form-group">
-                            {{form.username|add_class:"form-control,username"}}
-                            </div>
-                            <div class="form-group">
-                            {{form.password|add_class:"form-control,password"}}
-                            </div>
-                            <div class="form-group">
-                                <input class="btn btn-primary py-3 px-5" type="submit" value="Login">
-                            </div>
-                        </form>
-                        <a href="/register"><button class="btn btn-primary py-3 px-5">Want to register ?</button></a>
-                    </div>
-                </div>
-            </center>
-        </div>
-    </section>
-</div>
-
-
-<footer class="ftco-footer ftco-bg-dark ftco-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 text-center">
-
-                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    Copyright &copy;<script>document.write(new Date().getFullYear());</script>
-                    All rights reserved | This template is made with <i aria-hidden="true" class="icon-heart"></i> by <a
-                            href="https://colorlib.com" target="_blank">Colorlib</a>
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-            </div>
-        </div>
+        <form method="post">
+            <h1>Login</h1>
+            {% csrf_token %}
+            {{form.as_p}}
+            <br>
+            <button type="submit">Login</button>
+        </form>
+        <a href="/register"><button>Want to register ?</button></a>
     </div>
-</footer>
-
-
-<!-- loader -->
-<div class="show fullscreen" id="ftco-loader">
-    <svg class="circular" height="48px" width="48px">
-        <circle class="path-bg" cx="24" cy="24" fill="none" r="22" stroke="#eeeeee" stroke-width="4"/>
-        <circle class="path" cx="24" cy="24" fill="none" r="22" stroke="#F96D00" stroke-miterlimit="10"
-                stroke-width="4"/>
-    </svg>
 </div>
-
-
-<script src="{% static 'js/jquery.min.js' %}"></script>
-<script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
-<script src="{% static 'js/popper.min.js' %}"></script>
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
-<script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
-<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
-<script src="{% static 'js/jquery.stellar.min.js' %}"></script>
-<script src="{% static 'js/owl.carousel.min.js' %}"></script>
-<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
-<script src="{% static 'js/aos.js' %}"></script>
-<script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
-<script src="{% static 'js/particles.min.js' %}"></script>
-<script src="{% static 'js/particle.js' %}"></script>
-<script src="{% static 'js/scrollax.min.js' %}"></script>
-<script src="{% static 'js/main.js' %}"></script>
 
 </body>
 </html>

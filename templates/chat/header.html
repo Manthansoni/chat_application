@@ -1,38 +1,163 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-    <div class="container">
-        <a class="navbar-brand" href="/">MeChat</a>
-        <button aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
-                data-target="#ftco-nav" data-toggle="collapse" type="button">
-            <span class="oi oi-menu"></span> Menu
-        </button>
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <style>
+        #loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
 
-        <div class="collapse navbar-collapse" id="ftco-nav">
-            <ul class="navbar-nav ml-auto">
-<!--                <li class="nav-item dropdown">-->
-<!--                    <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle"-->
-<!--                       data-toggle="dropdown"-->
-<!--                       href="portfolio.html" id="dropdown04">Portfolio</a>-->
-<!--                    <div aria-labelledby="dropdown04" class="dropdown-menu">-->
-<!--                        <a class="dropdown-item" href="portfolio.html">Portfolio</a>-->
-<!--                        <a class="dropdown-item" href="portfolio-single.html">Portfolio Single</a>-->
-<!--                    </div>-->
-<!--                </li>-->
-                <li class="nav-item"><a class="nav-link" href="new_chat">Start New Chat</a></li>
-                <li class="nav-item cta dropdown">
-                    <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle"
-                       data-toggle="dropdown"> Hello {{request.user}}</a>
-                    <div aria-labelledby="dropdown04" class="dropdown-menu">
-                            {% if request.user.is_authenticated %}
-                            <form action="{% url 'logout-user' %}" method="post">
-                                {% csrf_token %}
-                                <button type="submit" class="dropdown-item">Logout</button>
-                            </form>
-                            {% endif %}
-                    </div>
+        #loader {
+            display: block;
+            position: relative;
+            left: 50%;
+            top: 50%;
+            width: 100px;
+            height: 100px;
+            margin: -50px 0 0 -50px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top-color: #3498db;
+            -webkit-animation: spin 2s linear infinite;
+            /* Chrome, Opera 15+, Safari 5+ */
+            animation: spin 2s linear infinite;
+            /* Chrome, Firefox 16+, IE 10+, Opera */
+        }
+
+        #loader:before {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top-color: #e74c3c;
+            -webkit-animation: spin 3s linear infinite;
+            /* Chrome, Opera 15+, Safari 5+ */
+            animation: spin 3s linear infinite;
+            /* Chrome, Firefox 16+, IE 10+, Opera */
+        }
+
+        #loader:after {
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top-color: #f9c922;
+            -webkit-animation: spin 1.5s linear infinite;
+            /* Chrome, Opera 15+, Safari 5+ */
+            animation: spin 1.5s linear infinite;
+            /* Chrome, Firefox 16+, IE 10+, Opera */
+        }
+
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+                /* Chrome, Opera 15+, Safari 3.1+ */
+                -ms-transform: rotate(0deg);
+                /* IE 9 */
+                transform: rotate(0deg);
+                /* Firefox 16+, IE 10+, Opera */
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                /* Chrome, Opera 15+, Safari 3.1+ */
+                -ms-transform: rotate(360deg);
+                /* IE 9 */
+                transform: rotate(360deg);
+                /* Firefox 16+, IE 10+, Opera */
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+                /* Chrome, Opera 15+, Safari 3.1+ */
+                -ms-transform: rotate(0deg);
+                /* IE 9 */
+                transform: rotate(0deg);
+                /* Firefox 16+, IE 10+, Opera */
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                /* Chrome, Opera 15+, Safari 3.1+ */
+                -ms-transform: rotate(360deg);
+                /* IE 9 */
+                transform: rotate(360deg);
+                /* Firefox 16+, IE 10+, Opera */
+            }
+        }
+        .banner-area{
+            background-image: url('{% static 'background.png' %}');
+            background-position: center center;
+            background-size:cover ;
+            /* -webkit-background-size:cover ; */
+            height: 70px;
+            width: auto;
+            margin: auto;
+        }
+        .menu{
+            float: right;
+            list-style: none;
+            margin-top:30px;
+        }
+        .menu ul li{
+            display: inline-block;
+        }
+        .menu ul li a{
+            color: #fff;
+            text-decoration: none;
+            padding: 5px 20px;
+            font-family: 'poppins' ,sans-serif;
+            font-size: 16px;
+        }
+        .menu ul li a:hover{
+            color: rgb(199, 139, 255);
+        }
+         .menu button{
+            color: #fff;
+            text-decoration: none;
+            padding: 2px 20px;
+            font-family: 'poppins' ,sans-serif;
+            font-size: 16px;
+            border:none;
+            background:none;
+        }
+    </style>
+</head>
+<body>
+<div class="banner-area">
+    <header>
+        <div class="menu">
+            <ul>
+                <li><a>Hello {{request.user}}</a></li>
+                <li><a href="new_chat">Start New Chat</a></li>
+                <li>
+                    {% if request.user.is_authenticated %}
+                    <form action="{% url 'logout-user' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Logout</button>
+                    </form>
+                    {% endif %}
                 </li>
             </ul>
         </div>
-    </div>
-</nav>
-<!-- END nav -->
+    </header>
+</div>
+</body>
+</html>

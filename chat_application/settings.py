@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-gacpduq=-mlg$8tae+u&!+n469i*5muw5f*@b&1lp53(uz_$-o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -171,5 +171,3 @@ except Exception as e:
     pass
 
 CSRF_TRUSTED_ORIGINS = ['https://chat-application-8dwd.onrender.com']
-
-handler404 = "chat.views.page_not_found_view"
